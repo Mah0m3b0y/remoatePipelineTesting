@@ -2,14 +2,7 @@
     "$schema": "http://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "workspaceName": {
-            "type": "string",
-            "metadata": "Workspace name",
-            "defaultValue": "bi-dev-datawarehouse"
-        },
-        "BIDataStorage": { "type": "string" },
-        "TestingDestinationDBConnection": { "type": "string" },
-        "TestingSourceDBConnection": { "type": "string" }
+
     },
     "variables": { "workspaceId": "[concat('Microsoft.Synapse/workspaces/', parameters('workspaceName'))]" },
     "resources": [
