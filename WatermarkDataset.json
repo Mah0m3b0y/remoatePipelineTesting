@@ -1,0 +1,19 @@
+{
+    "name": "WatermarkDataset",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "TestingDestinationDBConnection",
+            "type": "LinkedServiceReference"
+        },
+        "folder": {
+            "name": "TestingIncrementalPattern"
+        },
+        "annotations": [],
+        "type": "AzureSqlTable",
+        "schema": [],
+        "typeProperties": {
+            "schema": "dbo",
+            "table": "watermarktable"
+        }
+    }
+}

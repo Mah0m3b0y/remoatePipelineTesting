@@ -1,0 +1,27 @@
+{
+    "name": "SinkDataset",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "TestingDestinationDBConnection",
+            "type": "LinkedServiceReference"
+        },
+        "parameters": {
+            "SinkTableName": {
+                "type": "string"
+            }
+        },
+        "folder": {
+            "name": "TestingIncrementalPattern"
+        },
+        "annotations": [],
+        "type": "AzureSqlTable",
+        "schema": [],
+        "typeProperties": {
+            "schema": "dbo",
+            "table": {
+                "value": "@dataset().SinkTableName",
+                "type": "Expression"
+            }
+        }
+    }
+}

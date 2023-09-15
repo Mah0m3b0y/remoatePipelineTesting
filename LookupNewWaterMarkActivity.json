@@ -1,0 +1,29 @@
+{
+    "name": "LookupNewWaterMarkActivity",
+    "type": "Lookup",
+    "dependsOn": [],
+    "policy": {
+        "timeout": "0.12:00:00",
+        "retry": 0,
+        "retryIntervalInSeconds": 30,
+        "secureOutput": false,
+        "secureInput": false
+    },
+    "userProperties": [],
+    "typeProperties": {
+        "source": {
+            "type": "AzureSqlSource",
+            "sqlReaderQuery": {
+                "value": "select MAX(@{item().WaterMark_Column}) as NewWatermarkvalue from @{item().TABLE_NAME}",
+                "type": "Expression"
+            },
+            "queryTimeout": "02:00:00",
+            "partitionOption": "None"
+        },
+        "dataset": {
+            "referenceName": "SourceDataset",
+            "type": "DatasetReference"
+        },
+        "firstRowOnly": true
+    }
+}

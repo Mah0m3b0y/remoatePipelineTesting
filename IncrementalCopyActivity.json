@@ -1,0 +1,88 @@
+{
+    "name": "IncrementalCopyActivity",
+    "type": "Copy",
+    "dependsOn": [
+        {
+            "activity": "LookupOldWaterMarkActivity",
+            "dependencyConditions": [
+                "Succeeded"
+            ]
+        },
+        {
+            "activity": "LookupNewWaterMarkActivity",
+            "dependencyConditions": [
+                "Succeeded"
+            ]
+        }
+    ],
+    "policy": {
+        "timeout": "0.12:00:00",
+        "retry": 0,
+        "retryIntervalInSeconds": 30,
+        "secureOutput": false,
+        "secureInput": false
+    },
+    "userProperties": [],
+    "typeProperties": {
+        "source": {
+            "type": "AzureSqlSource",
+            "sqlReaderQuery": {
+                "value": "select * from @{item().TABLE_NAME} where @{item().WaterMark_Column} > '@{activity('LookupOldWaterMarkActivity').output.firstRow.WatermarkValue}' and @{item().WaterMark_Column} <= '@{activity('LookupNewWaterMarkActivity').output.firstRow.NewWatermarkvalue}'",
+                "type": "Expression"
+            },
+            "queryTimeout": "02:00:00",
+            "partitionOption": "None"
+        },
+        "sink": {
+            "type": "AzureSqlSink",
+            "sqlWriterStoredProcedureName": {
+                "value": "@{item().StoredProcedureNameForMergeOperation}",
+                "type": "Expression"
+            },
+            "sqlWriterTableType": {
+                "value": "@{item().TableType}",
+                "type": "Expression"
+            },
+            "storedProcedureTableTypeParameterName": {
+                "value": "@{item().TABLE_NAME}",
+                "type": "Expression"
+            },
+            "disableMetricsCollection": false
+        },
+        "enableStaging": true,
+        "stagingSettings": {
+            "linkedServiceName": {
+                "referenceName": "BIDataStorage",
+                "type": "LinkedServiceReference"
+            },
+            "path": "incrementalstaging",
+            "enableCompression": true
+        },
+        "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+                "allowDataTruncation": true,
+                "treatBooleanAsNumber": false
+            }
+        }
+    },
+    "inputs": [
+        {
+            "referenceName": "SourceDataset",
+            "type": "DatasetReference"
+        }
+    ],
+    "outputs": [
+        {
+            "referenceName": "SinkDataset",
+            "type": "DatasetReference",
+            "parameters": {
+                "SinkTableName": {
+                    "value": "@{item().TABLE_NAME}",
+                    "type": "Expression"
+                }
+            }
+        }
+    ]
+}
