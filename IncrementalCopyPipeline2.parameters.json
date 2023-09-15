@@ -1,0 +1,18 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspaceName": {
+            "value": "bi-dev-datawarehouse"
+        },
+        "BIDataStorage": {
+            "value": "" // TODO: Fill in parameter value
+        },
+        "TestingDestinationDBConnection": {
+            "value": "" // TODO: Fill in parameter value
+        },
+        "TestingSourceDBConnection": {
+            "value": "" // TODO: Fill in parameter value
+        }
+    }
+}
