@@ -1,5 +1,5 @@
 {
-    "name": "WatermarkDataset",
+    "name": "WatermarkDataset", //change to IncrementalLoadDataset param/variable
     "properties": {
         "linkedServiceName": {
             "referenceName": "TestingDestinationDBConnection",
